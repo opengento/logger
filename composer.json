@@ -5,8 +5,10 @@
         "php",
         "magento",
         "magento2",
-        "gdpr",
-        "rgpd"
+        "gelf",
+        "ELK",
+        "Graylog",
+        "Elasticsearch"
     ],
     "require": {
         "php": ">=7.0",

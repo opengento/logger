@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © OpenGento, All rights reserved.
+ * See LICENSE bundled with this library for license details.
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+    <system>
+        <tab id="loggin" sortOrder="999" translate="label">
+            <label>Opengento: Advanced Logger</label>
+        </tab>
+        <section id="loggin" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="10" translate="label">
+            <label>Gelf loggin</label>
+            <tab>loggin</tab>
+            <resource>Opengento_Logger::config_opengento_looger</resource>
+            <group id="loggin" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="10" translate="label">
+                <label>loggin</label>
+                <field id="transport_host" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="10" translate="label" type="text">
+                    <label>Gelf transport host</label>
+                    <comment/>
+                </field>
+                <field id="transport_port" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="10" translate="label" type="text">
+                    <label>Gelf transport port</label>
+                    <comment/>
+                </field>
+            </group>
+        </section>
+    </system>
+</config>

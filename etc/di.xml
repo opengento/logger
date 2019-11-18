@@ -1,0 +1,44 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © OpenGento, All rights reserved.
+ * See LICENSE bundled with this library for license details.
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+
+    <virtualType name="gelfTransport" type="Opengento\Logger\Transport\UdpTransportWrapper">
+        <arguments>
+            <argument name="hostPath" xsi:type="string">loggin/loggin/transport_host</argument>
+            <argument name="portPath" xsi:type="string">loggin/loggin/transport_port</argument>
+        </arguments>
+    </virtualType>
+
+    <virtualType name="gelfPublisher" type="Gelf\Publisher" >
+        <arguments>
+            <argument name="transport" xsi:type="object">gelfTransport</argument>
+        </arguments>
+    </virtualType>
+
+    <virtualType name="SimpleGelfHandler" type="Opengento\Logger\Handler\GelfHandlerWrapper">
+        <arguments>
+            <argument name="publisher" xsi:type="object">gelfPublisher</argument>
+            <argument name="level" xsi:type="init_parameter">Monolog\Logger::INFO</argument>
+        </arguments>
+    </virtualType>
+
+    <virtualType name="NoopHandler" type="Monolog\Handler\NullHandler" />
+
+    <type name="Magento\Framework\Logger\Monolog">
+        <arguments>
+            <argument name="name" xsi:type="string">main</argument>
+            <argument name="handlers"  xsi:type="array">
+                <item name="system" xsi:type="object">SimpleGelfHandler</item>
+                <item name="debug" xsi:type="object">NoopHandler</item>
+            </argument>
+            <argument name="processors" xsi:type="array">
+                <item name="exceptions" xsi:type="object">Opengento\Logger\Processor\ExceptionProcessor</item>
+            </argument>
+        </arguments>
+    </type>
+</config>

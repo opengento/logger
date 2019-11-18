@@ -3,6 +3,7 @@
  * Copyright © OpenGento, All rights reserved.
  * See LICENSE bundled with this library for license details.
  */
+
 namespace Opengento\Logger\Handler;
 
 use Gelf\PublisherInterface;
@@ -21,8 +22,8 @@ class GelfHandlerWrapper extends GelfHandler
      * GelfHandlerWrapper constructor.
      *
      * @param PublisherInterface $publisher
-     * @param int $level
-     * @param bool $bubble
+     * @param int                $level
+     * @param bool               $bubble
      */
     public function __construct(PublisherInterface $publisher, $level = Logger::DEBUG, $bubble = true)
     {

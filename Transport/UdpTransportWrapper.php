@@ -3,6 +3,7 @@
  * Copyright © OpenGento, All rights reserved.
  * See LICENSE bundled with this library for license details.
  */
+
 namespace Opengento\Logger\Transport;
 
 use Gelf\MessageInterface as Message;
@@ -11,6 +12,11 @@ use Gelf\Transport\UdpTransport;
 use Gelf\Transport\UdpTransportFactory;
 use Magento\Framework\App\Config\ScopeConfigInterface;
 
+/**
+ * Class UdpTransportWrapper
+ *
+ * @package Opengento\Logger\Transport
+ */
 class UdpTransportWrapper implements TransportInterface
 {
     /**
@@ -62,17 +68,20 @@ class UdpTransportWrapper implements TransportInterface
      */
     public function send(Message $message)
     {
-       return $this->getTransporter()->send($message);
+        return $this->getTransporter()->send($message);
     }
 
+    /**
+     * @return UdpTransport
+     */
     private function getTransporter(): UdpTransport
     {
         if (null === $this->transporter) {
             $this->transporter = $this->transportFactory->create([
-                'host'=> $this->scopeConfig->getValue($this->hostPath),
-                'port' => $this->scopeConfig->getValue($this->portPath),
-                'chunkSize' => $this->chunkSize]
-            );
+                'host'      => $this->scopeConfig->getValue($this->hostPath),
+                'port'      => $this->scopeConfig->getValue($this->portPath),
+                'chunkSize' => $this->chunkSize
+            ]);
         }
 
         return $this->transporter;

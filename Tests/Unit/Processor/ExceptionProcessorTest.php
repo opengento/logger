@@ -3,6 +3,7 @@
  * Copyright © OpenGento, All rights reserved.
  * See LICENSE bundled with this library for license details.
  */
+
 namespace Opengento\Logger\Tests\Unit\Processor;
 
 use Opengento\Logger\Processor\ExceptionProcessor;

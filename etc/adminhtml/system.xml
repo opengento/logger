@@ -16,11 +16,16 @@
             <resource>Opengento_Logger::config_opengento_looger</resource>
             <group id="loggin" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="10" translate="label">
                 <label>loggin</label>
+                <field id="is_enable" showInDefault="1" showInStore="0" showInWebsite="0" sortOrder="5" translate="label" type="select">
+                    <label>Enable ?</label>
+                    <comment/>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
                 <field id="transport_host" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="10" translate="label" type="text">
                     <label>Gelf transport host</label>
                     <comment/>
                 </field>
-                <field id="transport_port" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="10" translate="label" type="text">
+                <field id="transport_port" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="15" translate="label" type="text">
                     <label>Gelf transport port</label>
                     <comment/>
                 </field>

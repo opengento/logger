@@ -11,6 +11,7 @@
         <arguments>
             <argument name="hostPath" xsi:type="string">loggin/loggin/transport_host</argument>
             <argument name="portPath" xsi:type="string">loggin/loggin/transport_port</argument>
+            <argument name="isEnable" xsi:type="string">loggin/loggin/is_enable</argument>
         </arguments>
     </virtualType>
 

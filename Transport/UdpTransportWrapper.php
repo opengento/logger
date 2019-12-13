@@ -23,18 +23,27 @@ class UdpTransportWrapper implements TransportInterface
      * @var ScopeConfigInterface
      */
     private $scopeConfig;
+
     /**
      * @var string
      */
     private $hostPath;
+
     /**
      * @var string
      */
     private $portPath;
+
+    /**
+     * @var string
+     */
+    private $isEnable;
+
     /**
      * @var string
      */
     private $chunkSize;
+
     /**
      * @var UdpTransport
      */
@@ -45,16 +54,28 @@ class UdpTransportWrapper implements TransportInterface
      */
     private $transportFactory;
 
+    /**
+     * UdpTransportWrapper constructor.
+     *
+     * @param UdpTransportFactory  $transportFactory
+     * @param ScopeConfigInterface $scopeConfig
+     * @param string               $hostPath
+     * @param string               $portPath
+     * @param string               $isEnable
+     * @param string               $chunkSize
+     */
     public function __construct(
         UdpTransportFactory $transportFactory,
         ScopeConfigInterface $scopeConfig,
         string $hostPath,
         string $portPath,
+        string $isEnable,
         string $chunkSize = UdpTransport::CHUNK_SIZE_LAN
     ) {
         $this->scopeConfig = $scopeConfig;
         $this->hostPath = $hostPath;
         $this->portPath = $portPath;
+        $this->isEnable = $isEnable;
         $this->chunkSize = $chunkSize;
         $this->transportFactory = $transportFactory;
     }
@@ -68,7 +89,9 @@ class UdpTransportWrapper implements TransportInterface
      */
     public function send(Message $message)
     {
-        return $this->getTransporter()->send($message);
+        if ($this->scopeConfig->getValue($this->isEnable) === '1') {
+            return $this->getTransporter()->send($message);
+        }
     }
 
     /**

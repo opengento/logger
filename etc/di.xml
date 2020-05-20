@@ -21,9 +21,15 @@
         </arguments>
     </virtualType>
 
-    <virtualType name="SimpleGelfHandler" type="Opengento\Logger\Handler\GelfHandlerWrapper">
+    <virtualType name="gelfPublisherWrapper" type="Opengento\Logger\Publisher\GelfPublisherWrapper" >
         <arguments>
             <argument name="publisher" xsi:type="object">gelfPublisher</argument>
+        </arguments>
+    </virtualType>
+
+    <virtualType name="SimpleGelfHandler" type="Opengento\Logger\Handler\GelfHandlerWrapper">
+        <arguments>
+            <argument name="publisher" xsi:type="object">gelfPublisherWrapper</argument>
             <argument name="level" xsi:type="init_parameter">Monolog\Logger::INFO</argument>
         </arguments>
     </virtualType>

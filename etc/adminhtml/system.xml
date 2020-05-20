@@ -29,6 +29,12 @@
                     <label>Gelf transport port</label>
                     <comment/>
                 </field>
+                <field id="types_logger" translate="label" type="text" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Custom configuration</label>
+                    <frontend_model>Opengento\Logger\Block\Adminhtml\System\Config\Form\Field\Type</frontend_model>
+                    <backend_model>Magento\Config\Model\Config\Backend\Serialized\ArraySerialized</backend_model>
+                    <comment>Add key with custom value</comment>
+                </field>
             </group>
         </section>
     </system>

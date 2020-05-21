@@ -11,13 +11,13 @@
             <label>Opengento: Advanced Logger</label>
         </tab>
         <section id="loggin" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="10" translate="label">
-            <label>Gelf loggin</label>
+            <label>Logger</label>
             <tab>loggin</tab>
-            <resource>Opengento_Logger::config_opengento_looger</resource>
-            <group id="loggin" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="10" translate="label">
-                <label>loggin</label>
-                <field id="is_enable" showInDefault="1" showInStore="0" showInWebsite="0" sortOrder="5" translate="label" type="select">
-                    <label>Enable ?</label>
+            <resource>Opengento_Logger::config_opengento_logger</resource>
+            <group id="gelf" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="10" translate="label">
+                <label>Gelf</label>
+                <field id="is_enabled" showInDefault="1" showInStore="0" showInWebsite="0" sortOrder="5" translate="label" type="select">
+                    <label>Enabled ?</label>
                     <comment/>
                     <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
                 </field>
@@ -34,6 +34,71 @@
                     <frontend_model>Opengento\Logger\Block\Adminhtml\System\Config\Form\Field\Type</frontend_model>
                     <backend_model>Magento\Config\Model\Config\Backend\Serialized\ArraySerialized</backend_model>
                     <comment>Add key with custom value</comment>
+                </field>
+                <field id="level" showInDefault="1" showInStore="0" showInWebsite="0" sortOrder="10" translate="label" type="select">
+                    <label>Level</label>
+                    <source_model>Opengento\Logger\Config\Source\LoggingLevel</source_model>
+                    <comment>Messages of this or a higher level will be logged in your log system.</comment>
+                </field>
+            </group>
+            <group id="console" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="10" translate="label">
+                <label>Console</label>
+                <field id="is_enabled" showInDefault="1" showInStore="0" showInWebsite="0" sortOrder="5" translate="label" type="select">
+                    <label>Enabled ?</label>
+                    <comment/>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="level" showInDefault="1" showInStore="0" showInWebsite="0" sortOrder="10" translate="label" type="select">
+                    <label>Level</label>
+                    <source_model>Opengento\Logger\Config\Source\LoggingLevel</source_model>
+                    <comment>Messages of this or a higher level will be logged in console.</comment>
+                </field>
+            </group>
+            <group id="mail" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="10" translate="label">
+                <label>Mail</label>
+                <field id="is_enabled" showInDefault="1" showInStore="0" showInWebsite="0" sortOrder="5" translate="label" type="select">
+                    <label>Enabled ?</label>
+                    <comment/>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="to" showInDefault="1" showInStore="0" showInWebsite="0" sortOrder="30" translate="label" type="text">
+                    <label>To</label>
+                    <comment>To who you want to send the mail, you can specify multiple mails by separating them by a coma (,)</comment>
+                </field>
+                <field id="subject" showInDefault="1" showInStore="0" showInWebsite="0" sortOrder="30" translate="label" type="text">
+                    <label>Subject</label>
+                    <comment>The subject of the mail</comment>
+                </field>
+                <field id="from" showInDefault="1" showInStore="0" showInWebsite="0" sortOrder="30" translate="label" type="text">
+                    <label>From</label>
+                    <comment>From who you want to send the mail</comment>
+                </field>
+                <field id="level" showInDefault="1" showInStore="0" showInWebsite="0" sortOrder="10" translate="label" type="select">
+                    <label>Level</label>
+                    <source_model>Opengento\Logger\Config\Source\LoggingLevel</source_model>
+                    <comment>Messages of this or a higher level will be logged in mail.</comment>
+                </field>
+            </group>
+            <group id="file" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="10" translate="label">
+                <label>File</label>
+                <field id="is_enabled" showInDefault="1" showInStore="0" showInWebsite="0" sortOrder="5" translate="label" type="select">
+                    <label>Enabled ?</label>
+                    <comment/>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="level" showInDefault="1" showInStore="0" showInWebsite="0" sortOrder="20" translate="label" type="select">
+                    <label>Level</label>
+                    <source_model>Opengento\Logger\Config\Source\LoggingLevel</source_model>
+                    <comment>Messages of this or a higher level will be logged in files.</comment>
+                </field>
+                <field id="filename" showInDefault="1" showInStore="0" showInWebsite="0" sortOrder="30" translate="label" type="text">
+                    <label>File name</label>
+                    <comment>Name of file where the logs must be sent (it will be sent in var/log folder)</comment>
+                </field>
+                <field id="max_files" showInDefault="1" showInStore="0" showInWebsite="0" sortOrder="30" translate="label" type="text">
+                    <label>Max files</label>
+                    <comment>Messages of this or a higher level will be logged in files.</comment>
+                    <validate>validate-digits validate-zero-or-greater</validate>
                 </field>
             </group>
         </section>

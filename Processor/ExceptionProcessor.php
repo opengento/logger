@@ -4,6 +4,8 @@
  * See LICENSE bundled with this library for license details.
  */
 
+declare(strict_types=1);
+
 namespace Opengento\Logger\Processor;
 
 use Monolog\Processor\ProcessorInterface;
@@ -16,6 +18,7 @@ use Monolog\Processor\ProcessorInterface;
 class ExceptionProcessor implements ProcessorInterface
 {
     /**
+     * @param array $records
      * @return array The processed records
      */
     public function __invoke(array $records)

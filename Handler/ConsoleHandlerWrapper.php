@@ -4,13 +4,13 @@
  * See LICENSE bundled with this library for license details.
  */
 
-declare(strict_types=1);
+declare(strict_types = 1);
 
 namespace Opengento\Logger\Handler;
 
-use Gelf\PublisherInterface;
 use Magento\Framework\App\Config\ScopeConfigInterface;
-use Monolog\Handler\GelfHandler;
+use Monolog\Handler\StreamHandler;
+use Monolog\Logger;
 use Opengento\Logger\Traits\VerifyConfiguration;
 
 /**
@@ -19,7 +19,7 @@ use Opengento\Logger\Traits\VerifyConfiguration;
  *
  * @package Opengento\Logger\Handler
  */
-class GelfHandlerWrapper extends GelfHandler
+class ConsoleHandlerWrapper extends StreamHandler
 {
     use VerifyConfiguration;
 
@@ -29,52 +29,51 @@ class GelfHandlerWrapper extends GelfHandler
     private $isEnabled;
 
     /**
-     * @var string
-     */
-    private $levelPath;
-
-    /**
      * @var ScopeConfigInterface
      */
     private $scopeConfig;
 
     /**
-     * @var GelfHandler
+     * @var string
      */
-    private $gelfHandler;
+    private $levelPath;
 
     /**
-     * GelfHandlerWrapper constructor.
-     * @param PublisherInterface $publisher
+     * @var StreamHandler
+     */
+    private $consoleHandler;
+
+    /**
+     * ConsoleHandlerWrapper constructor.
+     *
      * @param ScopeConfigInterface $scopeConfig
      * @param string $isEnabled
      * @param string $levelPath
      */
     public function __construct(
-        PublisherInterface $publisher,
         ScopeConfigInterface $scopeConfig,
         string $isEnabled,
         string $levelPath
     )
     {
-        $this->publisher = $publisher;
+        $this->scopeConfig = $scopeConfig;
         $this->isEnabled = $isEnabled;
         $this->levelPath = $levelPath;
-        $this->scopeConfig = $scopeConfig;
     }
 
     /**
-     * @return GelfHandler
+     * @return StreamHandler
+     * @throws \Exception
      */
-    final public function getInstance(): GelfHandler
+    final public function getInstance(): StreamHandler
     {
-        if (!$this->gelfHandler) {
-            $this->gelfHandler = new GelfHandler(
-                $this->publisher,
+        if (!$this->consoleHandler) {
+            $this->consoleHandler = new StreamHandler(
+                'php://stdout',
                 $this->scopeConfig->getValue($this->levelPath)
             );
         }
 
-        return $this->gelfHandler;
+        return $this->consoleHandler;
     }
 }

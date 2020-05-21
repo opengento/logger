@@ -5,23 +5,23 @@
  * See LICENSE bundled with this library for license details.
  */
 -->
-<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
 
     <virtualType name="gelfTransport" type="Opengento\Logger\Transport\UdpTransportWrapper">
         <arguments>
-            <argument name="hostPath" xsi:type="string">loggin/loggin/transport_host</argument>
-            <argument name="portPath" xsi:type="string">loggin/loggin/transport_port</argument>
-            <argument name="isEnable" xsi:type="string">loggin/loggin/is_enable</argument>
+            <argument name="hostPath" xsi:type="string">loggin/gelf/transport_host</argument>
+            <argument name="portPath" xsi:type="string">loggin/gelf/transport_port</argument>
         </arguments>
     </virtualType>
 
-    <virtualType name="gelfPublisher" type="Gelf\Publisher" >
+    <virtualType name="gelfPublisher" type="Gelf\Publisher">
         <arguments>
             <argument name="transport" xsi:type="object">gelfTransport</argument>
         </arguments>
     </virtualType>
 
-    <virtualType name="gelfPublisherWrapper" type="Opengento\Logger\Publisher\GelfPublisherWrapper" >
+    <virtualType name="gelfPublisherWrapper" type="Opengento\Logger\Publisher\GelfPublisherWrapper">
         <arguments>
             <argument name="publisher" xsi:type="object">gelfPublisher</argument>
         </arguments>
@@ -29,18 +29,48 @@
 
     <virtualType name="SimpleGelfHandler" type="Opengento\Logger\Handler\GelfHandlerWrapper">
         <arguments>
+            <argument name="isEnabled" xsi:type="string">loggin/gelf/is_enabled</argument>
+            <argument name="levelPath" xsi:type="string">loggin/gelf/level</argument>
             <argument name="publisher" xsi:type="object">gelfPublisherWrapper</argument>
-            <argument name="level" xsi:type="init_parameter">Monolog\Logger::INFO</argument>
         </arguments>
     </virtualType>
 
-    <virtualType name="NoopHandler" type="Monolog\Handler\NullHandler" />
+    <virtualType name="SimpleMailHandler" type="Opengento\Logger\Handler\MailHandlerWrapper">
+        <arguments>
+            <argument name="isEnabled" xsi:type="string">loggin/mail/is_enabled</argument>
+            <argument name="levelPath" xsi:type="string">loggin/mail/level</argument>
+            <argument name="toPath" xsi:type="string">loggin/mail/to</argument>
+            <argument name="subjectPath" xsi:type="string">loggin/mail/subject</argument>
+            <argument name="fromPath" xsi:type="string">loggin/mail/from</argument>
+        </arguments>
+    </virtualType>
+
+    <virtualType name="SimpleConsoleHandler" type="Opengento\Logger\Handler\ConsoleHandlerWrapper">
+        <arguments>
+            <argument name="isEnabled" xsi:type="string">loggin/console/is_enabled</argument>
+            <argument name="levelPath" xsi:type="string">loggin/console/level</argument>
+        </arguments>
+    </virtualType>
+
+    <virtualType name="SimpleRotatingFileHandler" type="Opengento\Logger\Handler\RotatingFileHandlerWrapper">
+        <arguments>
+            <argument name="isEnabled" xsi:type="string">loggin/file/is_enabled</argument>
+            <argument name="levelPath" xsi:type="string">loggin/file/level</argument>
+            <argument name="filenamePath" xsi:type="string">loggin/file/filename</argument>
+            <argument name="maxFilesPath" xsi:type="string">loggin/file/max_files</argument>
+        </arguments>
+    </virtualType>
+
+    <virtualType name="NoopHandler" type="Monolog\Handler\NullHandler"/>
 
     <type name="Magento\Framework\Logger\Monolog">
         <arguments>
             <argument name="name" xsi:type="string">main</argument>
-            <argument name="handlers"  xsi:type="array">
-                <item name="system" xsi:type="object">SimpleGelfHandler</item>
+            <argument name="handlers" xsi:type="array">
+                <item name="gelf" xsi:type="object">SimpleGelfHandler</item>
+                <item name="mail" xsi:type="object">SimpleMailHandler</item>
+                <item name="console" xsi:type="object">SimpleConsoleHandler</item>
+                <item name="logs" xsi:type="object">SimpleRotatingFileHandler</item>
                 <item name="debug" xsi:type="object">NoopHandler</item>
             </argument>
             <argument name="processors" xsi:type="array">

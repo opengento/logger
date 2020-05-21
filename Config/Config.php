@@ -11,5 +11,5 @@ use \Magento\Framework\App\Helper\AbstractHelper;
 class Config extends AbstractHelper
 {
     /** Config keys */
-    const CONFIG_LOGGER_CUSTOM_CONFIGURATION = 'loggin/loggin/types_logger';
+    const CONFIG_LOGGER_CUSTOM_CONFIGURATION = 'loggin/gelf/types_logger';
 }

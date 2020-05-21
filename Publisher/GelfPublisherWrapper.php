@@ -4,12 +4,15 @@
  * See LICENSE bundled with this library for license details.
  */
 
+declare(strict_types = 1);
+
 namespace Opengento\Logger\Publisher;
 
 use Gelf\MessageInterface;
 use Gelf\PublisherInterface;
 use Opengento\Logger\Config\CustomConfiguration;
 use Opengento\Logger\Config\Config;
+use Opengento\Logger\Traits\VerifyConfiguration;
 
 /**
  * Class GelfPublisherWrapper
@@ -30,6 +33,7 @@ class GelfPublisherWrapper implements PublisherInterface
 
     /**
      * GelfPublisherWrapper constructor.
+     *
      * @param PublisherInterface $publisher
      * @param CustomConfiguration $customConfiguration
      */
@@ -60,7 +64,7 @@ class GelfPublisherWrapper implements PublisherInterface
     {
         $customConfiguration = $this->customConfiguration->getUnserializedConfigValue(Config::CONFIG_LOGGER_CUSTOM_CONFIGURATION);
 
-        if(!$customConfiguration) return;
+        if (!$customConfiguration) return;
 
         foreach ($customConfiguration as $value) {
             $message->setAdditional($value['custom_logger_key'], $value['custom_logger_value']);

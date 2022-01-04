@@ -1,57 +1,48 @@
 <?php
+/**
+ * Copyright © OpenGento, All rights reserved.
+ * See LICENSE bundled with this library for license details.
+ */
+
+declare(strict_types=1);
 
 namespace Opengento\Logger\Config;
 
-/**
- * Class CustomConfiguration
- */
+use Magento\Framework\App\Config\ScopeConfigInterface;
+use Magento\Framework\Serialize\Serializer\Json;
+use Magento\Store\Model\ScopeInterface;
+
 class CustomConfiguration
 {
     /**
-     * @var \Magento\Framework\App\Config\ScopeConfigInterface
+     * @var ScopeConfigInterface
      */
     private $scopeConfig;
 
     /**
-     * @var \Magento\Framework\Serialize\Serializer\Json
+     * @var Json
      */
     private $serializer;
 
-
-    /**
-     * CustomFields constructor.
-     * @param \Magento\Framework\App\Helper\Context $context
-     * @param \Magento\Framework\Serialize\Serializer\Json $serializer
-     */
-    public function __construct(\Magento\Framework\App\Config\ScopeConfigInterface $scopeConfig, \Magento\Framework\Serialize\Serializer\Json $serializer)
+    public function __construct(ScopeConfigInterface $scopeConfig, Json $serializer)
     {
         $this->scopeConfig = $scopeConfig;
         $this->serializer = $serializer;
     }
 
-    /**
-     * @param $configPath
-     * @param null $store
-     * @return mixed
-     */
-    public function getConfigValue($configPath, $store = null){
-        return $this->scopeConfig->getValue(
-            $configPath,
-            \Magento\Store\Model\ScopeInterface::SCOPE_STORE,
-            $store
-        );
-    }
-
-    /**
-     * @param $configPath
-     * @param null $store
-     * @return array|bool|float|int|mixed|string|null
-     */
-    public function getUnserializedConfigValue($configPath, $store = null){
+    public function getUnserializedConfigValue(string $configPath, ?string $store = null): ?array
+    {
         $value = $this->getConfigValue($configPath, $store);
 
-        if(!$value) return false;
+        if (!$value) {
+            return null;
+        }
 
         return $this->serializer->unserialize($value);
+    }
+
+    public function getConfigValue(string $configPath, ?string $store = null)
+    {
+        return $this->scopeConfig->getValue($configPath, ScopeInterface::SCOPE_STORE, $store);
     }
 }

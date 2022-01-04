@@ -5,35 +5,182 @@
  * See LICENSE bundled with this library for license details.
  */
 -->
-<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
     <system>
         <tab id="loggin" sortOrder="999" translate="label">
             <label>Opengento: Advanced Logger</label>
         </tab>
         <section id="loggin" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="10" translate="label">
-            <label>Gelf loggin</label>
+            <label>Logger</label>
             <tab>loggin</tab>
-            <resource>Opengento_Logger::config_opengento_looger</resource>
-            <group id="loggin" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="10" translate="label">
-                <label>loggin</label>
-                <field id="is_enable" showInDefault="1" showInStore="0" showInWebsite="0" sortOrder="5" translate="label" type="select">
-                    <label>Enable ?</label>
-                    <comment/>
-                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
-                </field>
-                <field id="transport_host" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="10" translate="label" type="text">
-                    <label>Gelf transport host</label>
-                    <comment/>
-                </field>
-                <field id="transport_port" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="15" translate="label" type="text">
-                    <label>Gelf transport port</label>
-                    <comment/>
-                </field>
-                <field id="types_logger" translate="label" type="text" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
+            <resource>Opengento_Logger::config_opengento_logger</resource>
+            <group id="context" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="10" translate="label">
+                <label>Custom context</label>
+                <field id="types_logger" translate="label" type="text" sortOrder="20" showInDefault="1"
+                       showInWebsite="1" showInStore="1">
                     <label>Custom configuration</label>
                     <frontend_model>Opengento\Logger\Block\Adminhtml\System\Config\Form\Field\Type</frontend_model>
                     <backend_model>Magento\Config\Model\Config\Backend\Serialized\ArraySerialized</backend_model>
                     <comment>Add key with custom value</comment>
+                </field>
+            </group>
+            <group id="gelf" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="10" translate="label">
+                <label>Gelf</label>
+                <field id="is_enabled" showInDefault="1" showInStore="0" showInWebsite="0" sortOrder="5"
+                       translate="label" type="select">
+                    <label>Enabled ?</label>
+                    <comment/>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="transport_host" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="10"
+                       translate="label" type="text">
+                    <label>Gelf transport host</label>
+                    <comment/>
+                </field>
+                <field id="transport_port" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="15"
+                       translate="label" type="text">
+                    <label>Gelf transport port</label>
+                    <comment/>
+                </field>
+                <field id="level" showInDefault="1" showInStore="0" showInWebsite="0" sortOrder="7" translate="label"
+                       type="select">
+                    <label>Level</label>
+                    <source_model>Opengento\Logger\Config\Source\LoggingLevel</source_model>
+                    <comment>Messages of this or a higher level will be logged in your log system.</comment>
+                </field>
+            </group>
+            <group id="console" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="10" translate="label">
+                <label>Console</label>
+                <field id="is_enabled" showInDefault="1" showInStore="0" showInWebsite="0" sortOrder="5"
+                       translate="label" type="select">
+                    <label>Enabled ?</label>
+                    <comment/>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="level" showInDefault="1" showInStore="0" showInWebsite="0" sortOrder="10" translate="label"
+                       type="select">
+                    <label>Level</label>
+                    <source_model>Opengento\Logger\Config\Source\LoggingLevel</source_model>
+                    <comment>Messages of this or a higher level will be logged in console.</comment>
+                </field>
+            </group>
+            <group id="mail" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="10" translate="label">
+                <label>Mail</label>
+                <field id="is_enabled" showInDefault="1" showInStore="0" showInWebsite="0" sortOrder="5"
+                       translate="label" type="select">
+                    <label>Enabled ?</label>
+                    <comment/>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="to" showInDefault="1" showInStore="0" showInWebsite="0" sortOrder="30" translate="label"
+                       type="text">
+                    <label>To</label>
+                    <comment>To who you want to send the mail, you can specify multiple mails by separating them by a coma (,)</comment>
+                </field>
+                <field id="subject" showInDefault="1" showInStore="0" showInWebsite="0" sortOrder="30" translate="label"
+                       type="text">
+                    <label>Subject</label>
+                    <comment>The subject of the mail</comment>
+                </field>
+                <field id="from" showInDefault="1" showInStore="0" showInWebsite="0" sortOrder="30" translate="label"
+                       type="text">
+                    <label>From</label>
+                    <comment>From who you want to send the mail</comment>
+                </field>
+                <field id="level" showInDefault="1" showInStore="0" showInWebsite="0" sortOrder="10" translate="label"
+                       type="select">
+                    <label>Level</label>
+                    <source_model>Opengento\Logger\Config\Source\LoggingLevel</source_model>
+                    <comment>Messages of this or a higher level will be logged in mail.</comment>
+                </field>
+            </group>
+            <group id="file" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="10" translate="label">
+                <label>File</label>
+                <field id="is_enabled" showInDefault="1" showInStore="0" showInWebsite="0" sortOrder="5"
+                       translate="label" type="select">
+                    <label>Enabled ?</label>
+                    <comment/>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="level" showInDefault="1" showInStore="0" showInWebsite="0" sortOrder="20" translate="label"
+                       type="select">
+                    <label>Level</label>
+                    <source_model>Opengento\Logger\Config\Source\LoggingLevel</source_model>
+                    <comment>Messages of this or a higher level will be logged in files.</comment>
+                </field>
+                <field id="filename" showInDefault="1" showInStore="0" showInWebsite="0" sortOrder="30"
+                       translate="label" type="text">
+                    <label>File name</label>
+                    <comment>Name of file where the logs must be sent (it will be sent in var/log folder)</comment>
+                </field>
+                <field id="max_files" showInDefault="1" showInStore="0" showInWebsite="0" sortOrder="30"
+                       translate="label" type="text">
+                    <label>Max files</label>
+                    <comment>Messages of this or a higher level will be logged in files.</comment>
+                    <validate>validate-digits validate-zero-or-greater</validate>
+                </field>
+            </group>
+            <group id="slack" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="10" translate="label">
+                <label>Slack</label>
+                <field id="is_enabled" showInDefault="1" showInStore="0" showInWebsite="0" sortOrder="5"
+                       translate="label" type="select">
+                    <label>Enabled ?</label>
+                    <comment/>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="level" showInDefault="1" showInStore="0" showInWebsite="0" sortOrder="20" translate="label"
+                       type="select">
+                    <label>Level</label>
+                    <source_model>Opengento\Logger\Config\Source\LoggingLevel</source_model>
+                    <comment>Messages of this or a higher level will be logged in files.</comment>
+                </field>
+                <field id="token" showInDefault="1" showInStore="0" showInWebsite="0" sortOrder="30" translate="label"
+                       type="text">
+                    <label>Token</label>
+                    <comment>Slack API token</comment>
+                </field>
+                <field id="channel" showInDefault="1" showInStore="0" showInWebsite="0" sortOrder="40" translate="label"
+                       type="text">
+                    <label>Channel</label>
+                    <comment>Slack channel (encoded ID or name)</comment>
+                </field>
+                <field id="username" showInDefault="1" showInStore="0" showInWebsite="0" sortOrder="50"
+                       translate="label"
+                       type="text">
+                    <label>Username</label>
+                    <comment>Name of a bot</comment>
+                </field>
+                <field id="use_attachment" showInDefault="1" showInStore="0" showInWebsite="0" sortOrder="60"
+                       translate="label" type="select">
+                    <label>Use attachment</label>
+                    <comment>Whether the message should be added to Slack as attachment (plain text otherwise)</comment>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="icon_emoji" showInDefault="1" showInStore="0" showInWebsite="0" sortOrder="70"
+                       translate="label"
+                       type="text">
+                    <label>Icon emoji</label>
+                    <comment>The emoji name to use (or null)</comment>
+                </field>
+                <field id="bubble" showInDefault="1" showInStore="0" showInWebsite="0" sortOrder="80"
+                       translate="label" type="select">
+                    <label>Bubble</label>
+                    <comment>Whether the messages that are handled can bubble up the stack or not</comment>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="use_short_attachment" showInDefault="1" showInStore="0" showInWebsite="0" sortOrder="90"
+                       translate="label" type="select">
+                    <label>Use short attachment</label>
+                    <comment>Whether the the context/extra messages added to Slack as attachments are in a short style</comment>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="include_context_and_extra" showInDefault="1" showInStore="0" showInWebsite="0"
+                       sortOrder="100"
+                       translate="label" type="select">
+                    <label>Include context and extra</label>
+                    <comment>Whether the attachment should include context and extra data</comment>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
                 </field>
             </group>
         </section>

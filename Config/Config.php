@@ -1,15 +1,17 @@
 <?php
+/**
+ * Copyright © OpenGento, All rights reserved.
+ * See LICENSE bundled with this library for license details.
+ */
+
+declare(strict_types=1);
 
 namespace Opengento\Logger\Config;
 
-use \Magento\Framework\App\Helper\AbstractHelper;
+use Magento\Framework\App\Helper\AbstractHelper;
 
-/**
- * Class Config
- * @package Opengento\Logger\Config
- */
 class Config extends AbstractHelper
 {
     /** Config keys */
-    const CONFIG_LOGGER_CUSTOM_CONFIGURATION = 'loggin/loggin/types_logger';
+    public const CONFIG_LOGGER_CUSTOM_CONFIGURATION = 'loggin/context/types_logger';
 }

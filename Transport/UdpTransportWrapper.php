@@ -4,6 +4,8 @@
  * See LICENSE bundled with this library for license details.
  */
 
+declare(strict_types=1);
+
 namespace Opengento\Logger\Transport;
 
 use Gelf\MessageInterface as Message;
@@ -37,11 +39,6 @@ class UdpTransportWrapper implements TransportInterface
     /**
      * @var string
      */
-    private $isEnable;
-
-    /**
-     * @var string
-     */
     private $chunkSize;
 
     /**
@@ -61,7 +58,6 @@ class UdpTransportWrapper implements TransportInterface
      * @param ScopeConfigInterface $scopeConfig
      * @param string               $hostPath
      * @param string               $portPath
-     * @param string               $isEnable
      * @param string               $chunkSize
      */
     public function __construct(
@@ -69,13 +65,11 @@ class UdpTransportWrapper implements TransportInterface
         ScopeConfigInterface $scopeConfig,
         string $hostPath,
         string $portPath,
-        string $isEnable,
         string $chunkSize = UdpTransport::CHUNK_SIZE_LAN
     ) {
         $this->scopeConfig = $scopeConfig;
         $this->hostPath = $hostPath;
         $this->portPath = $portPath;
-        $this->isEnable = $isEnable;
         $this->chunkSize = $chunkSize;
         $this->transportFactory = $transportFactory;
     }
@@ -87,11 +81,9 @@ class UdpTransportWrapper implements TransportInterface
      *
      * @return int the number of bytes sent
      */
-    public function send(Message $message)
+    public function send(Message $message): int
     {
-        if ($this->scopeConfig->getValue($this->isEnable) === '1') {
-            return $this->getTransporter()->send($message);
-        }
+        return $this->getTransporter()->send($message);
     }
 
     /**

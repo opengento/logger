@@ -5,47 +5,94 @@
  * See LICENSE bundled with this library for license details.
  */
 -->
-<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
 
     <virtualType name="gelfTransport" type="Opengento\Logger\Transport\UdpTransportWrapper">
         <arguments>
-            <argument name="hostPath" xsi:type="string">loggin/loggin/transport_host</argument>
-            <argument name="portPath" xsi:type="string">loggin/loggin/transport_port</argument>
-            <argument name="isEnable" xsi:type="string">loggin/loggin/is_enable</argument>
+            <argument name="hostPath" xsi:type="string">loggin/gelf/transport_host</argument>
+            <argument name="portPath" xsi:type="string">loggin/gelf/transport_port</argument>
         </arguments>
     </virtualType>
 
-    <virtualType name="gelfPublisher" type="Gelf\Publisher" >
+    <virtualType name="gelfPublisher" type="Gelf\Publisher">
         <arguments>
             <argument name="transport" xsi:type="object">gelfTransport</argument>
         </arguments>
     </virtualType>
 
-    <virtualType name="gelfPublisherWrapper" type="Opengento\Logger\Publisher\GelfPublisherWrapper" >
+    <virtualType name="GelfHandler" type="Opengento\Logger\Handler\GelfHandler">
         <arguments>
+            <argument name="isEnabled" xsi:type="string">loggin/gelf/is_enabled</argument>
+            <argument name="levelPath" xsi:type="string">loggin/gelf/level</argument>
             <argument name="publisher" xsi:type="object">gelfPublisher</argument>
         </arguments>
     </virtualType>
 
-    <virtualType name="SimpleGelfHandler" type="Opengento\Logger\Handler\GelfHandlerWrapper">
+    <virtualType name="MailHandler" type="Opengento\Logger\Handler\MailHandler">
         <arguments>
-            <argument name="publisher" xsi:type="object">gelfPublisherWrapper</argument>
-            <argument name="level" xsi:type="init_parameter">Monolog\Logger::INFO</argument>
+            <argument name="isEnabled" xsi:type="string">loggin/mail/is_enabled</argument>
+            <argument name="levelPath" xsi:type="string">loggin/mail/level</argument>
+            <argument name="toPath" xsi:type="string">loggin/mail/to</argument>
+            <argument name="subjectPath" xsi:type="string">loggin/mail/subject</argument>
+            <argument name="fromPath" xsi:type="string">loggin/mail/from</argument>
         </arguments>
     </virtualType>
 
-    <virtualType name="NoopHandler" type="Monolog\Handler\NullHandler" />
+    <virtualType name="ConsoleHandler" type="Opengento\Logger\Handler\ConsoleHandler">
+        <arguments>
+            <argument name="isEnabled" xsi:type="string">loggin/console/is_enabled</argument>
+            <argument name="levelPath" xsi:type="string">loggin/console/level</argument>
+        </arguments>
+    </virtualType>
+
+    <virtualType name="RotatingFileHandler" type="Opengento\Logger\Handler\RotatingFileHandler">
+        <arguments>
+            <argument name="isEnabled" xsi:type="string">loggin/file/is_enabled</argument>
+            <argument name="levelPath" xsi:type="string">loggin/file/level</argument>
+            <argument name="filenamePath" xsi:type="string">loggin/file/filename</argument>
+            <argument name="maxFilesPath" xsi:type="string">loggin/file/max_files</argument>
+        </arguments>
+    </virtualType>
+
+    <virtualType name="SlackHandler" type="Opengento\Logger\Handler\SlackHandler">
+        <arguments>
+            <argument name="isEnabled" xsi:type="string">loggin/slack/is_enabled</argument>
+            <argument name="levelPath" xsi:type="string">loggin/slack/level</argument>
+            <argument name="tokenPath" xsi:type="string">loggin/slack/token</argument>
+            <argument name="channelPath" xsi:type="string">loggin/slack/channel</argument>
+            <argument name="usernamePath" xsi:type="string">loggin/slack/username</argument>
+            <argument name="useAttachmentPath" xsi:type="string">loggin/slack/use_attachment</argument>
+            <argument name="iconEmojiPath" xsi:type="string">loggin/slack/icon_emoji</argument>
+            <argument name="bubblePath" xsi:type="string">loggin/slack/bubble</argument>
+            <argument name="useShortAttachmentPath" xsi:type="string">loggin/slack/use_short_attachment</argument>
+            <argument name="includeContextAndExtraPath" xsi:type="string">loggin/slack/include_context_and_extra
+            </argument>
+        </arguments>
+    </virtualType>
+
+    <virtualType name="NoopHandler" type="Monolog\Handler\NullHandler"/>
+
+    <type name="Magento\Framework\Logger\Monolog">
+        <plugin name="override_set_handlers_method" type="Opengento\Logger\Plugin\MonologPlugin" sortOrder="1"/>
+    </type>
 
     <type name="Magento\Framework\Logger\Monolog">
         <arguments>
             <argument name="name" xsi:type="string">main</argument>
-            <argument name="handlers"  xsi:type="array">
-                <item name="system" xsi:type="object">SimpleGelfHandler</item>
+            <argument name="handlers" xsi:type="array">
+                <item name="gelf" xsi:type="object">GelfHandler</item>
+                <item name="mail" xsi:type="object">MailHandler</item>
+                <item name="console" xsi:type="object">ConsoleHandler</item>
+                <item name="logs" xsi:type="object">RotatingFileHandler</item>
+                <item name="slack" xsi:type="object">SlackHandler</item>
                 <item name="debug" xsi:type="object">NoopHandler</item>
             </argument>
             <argument name="processors" xsi:type="array">
                 <item name="exceptions" xsi:type="object">Opengento\Logger\Processor\ExceptionProcessor</item>
+                <item name="custom_context" xsi:type="object">Opengento\Logger\Processor\CustomContextProcessor</item>
             </argument>
         </arguments>
     </type>
 </config>
+

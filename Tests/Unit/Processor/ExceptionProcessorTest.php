@@ -6,6 +6,7 @@
 
 namespace Opengento\Logger\Tests\Unit\Processor;
 
+use LogicException;
 use Opengento\Logger\Processor\ExceptionProcessor;
 use PHPUnit\Framework\TestCase;
 
@@ -21,7 +22,7 @@ class ExceptionProcessorTest extends TestCase
      */
     public function testInvokeAddExtraInformationIntoRecords(): void
     {
-        $records = ['extra' => [], 'context' => ['exception' => new \LogicException('Test')]];
+        $records = ['extra' => [], 'context' => ['exception' => new LogicException('Test')]];
 
         $processor = new ExceptionProcessor();
         $records = $processor($records);

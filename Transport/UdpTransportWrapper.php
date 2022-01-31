@@ -83,7 +83,12 @@ class UdpTransportWrapper implements TransportInterface
      */
     public function send(Message $message): int
     {
-        return $this->getTransporter()->send($message);
+        try {
+            return $this->getTransporter()->send($message);
+        } catch (\Exception $e) {
+            return 0;
+        }
+        
     }
 
     /**

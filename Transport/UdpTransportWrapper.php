@@ -8,11 +8,15 @@ declare(strict_types=1);
 
 namespace Opengento\Logger\Transport;
 
+use Exception;
 use Gelf\MessageInterface as Message;
 use Gelf\Transport\TransportInterface;
 use Gelf\Transport\UdpTransport;
 use Gelf\Transport\UdpTransportFactory;
 use Magento\Framework\App\Config\ScopeConfigInterface;
+use Psr\Log\LoggerInterface;
+
+use function in_array;
 
 /**
  * Class UdpTransportWrapper
@@ -22,9 +26,19 @@ use Magento\Framework\App\Config\ScopeConfigInterface;
 class UdpTransportWrapper implements TransportInterface
 {
     /**
+     * @var UdpTransportFactory
+     */
+    private $transportFactory;
+
+    /**
      * @var ScopeConfigInterface
      */
     private $scopeConfig;
+
+    /**
+     * @var LoggerInterface
+     */
+    private $logger;
 
     /**
      * @var string
@@ -42,36 +56,41 @@ class UdpTransportWrapper implements TransportInterface
     private $chunkSize;
 
     /**
+     * @var string[]
+     */
+    private $ignoredMessages;
+
+    /**
      * @var UdpTransport
      */
     private $transporter;
 
-    /**
-     * @var UdpTransportFactory
-     */
-    private $transportFactory;
-
-    /**
-     * UdpTransportWrapper constructor.
-     *
-     * @param UdpTransportFactory  $transportFactory
-     * @param ScopeConfigInterface $scopeConfig
-     * @param string               $hostPath
-     * @param string               $portPath
-     * @param string               $chunkSize
-     */
     public function __construct(
         UdpTransportFactory $transportFactory,
         ScopeConfigInterface $scopeConfig,
+        LoggerInterface $logger,
         string $hostPath,
         string $portPath,
-        string $chunkSize = UdpTransport::CHUNK_SIZE_LAN
+        string $chunkSize = UdpTransport::CHUNK_SIZE_LAN,
+        array $ignoredMessages = []
     ) {
+        $this->transportFactory = $transportFactory;
         $this->scopeConfig = $scopeConfig;
+        $this->logger = $logger;
         $this->hostPath = $hostPath;
         $this->portPath = $portPath;
         $this->chunkSize = $chunkSize;
-        $this->transportFactory = $transportFactory;
+        $this->ignoredMessages = $ignoredMessages;
+        unset($this->transporter);
+    }
+
+    public function __get(string $name)
+    {
+        if ($name === 'transporter') {
+            return $this->{$name} = $this->createTransporter();
+        }
+
+        return null;
     }
 
     /**
@@ -83,27 +102,23 @@ class UdpTransportWrapper implements TransportInterface
      */
     public function send(Message $message): int
     {
-        try {
-            return $this->getTransporter()->send($message);
-        } catch (\Exception $e) {
-            return 0;
+        if (!in_array($message->getShortMessage(), $this->ignoredMessages, true)) {
+            try {
+                return $this->transporter->send($message);
+            } catch (Exception $e) {
+                $this->logger->error($e->getMessage(), $e->getTrace());
+            }
         }
-        
+
+        return 0;
     }
 
-    /**
-     * @return UdpTransport
-     */
-    private function getTransporter(): UdpTransport
+    private function createTransporter(): UdpTransport
     {
-        if (null === $this->transporter) {
-            $this->transporter = $this->transportFactory->create([
-                'host'      => $this->scopeConfig->getValue($this->hostPath),
-                'port'      => $this->scopeConfig->getValue($this->portPath),
-                'chunkSize' => $this->chunkSize
-            ]);
-        }
-
-        return $this->transporter;
+        return $this->transporter = $this->transportFactory->create([
+            'host' => $this->scopeConfig->getValue($this->hostPath),
+            'port' => $this->scopeConfig->getValue($this->portPath),
+            'chunkSize' => $this->chunkSize
+        ]);
     }
 }

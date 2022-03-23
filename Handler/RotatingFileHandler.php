@@ -10,7 +10,7 @@ namespace Opengento\Logger\Handler;
 
 use Exception;
 use Magento\Framework\App\Config\ScopeConfigInterface;
-use Magento\Framework\Filesystem\DirectoryList;
+use Magento\Framework\App\Filesystem\DirectoryList;
 use Monolog\Handler\HandlerInterface;
 
 class RotatingFileHandler implements MagentoHandlerInterface
@@ -67,7 +67,11 @@ class RotatingFileHandler implements MagentoHandlerInterface
     public function getInstance(): HandlerInterface
     {
         return new \Monolog\Handler\RotatingFileHandler(
-            sprintf('%s/log/%s', $this->directoryList->getPath('var'), $this->scopeConfig->getValue($this->filenamePath)),
+            sprintf(
+                '%s/log/%s',
+                $this->directoryList->getPath(DirectoryList::VAR_DIR),
+                $this->scopeConfig->getValue($this->filenamePath)
+            ),
             $this->scopeConfig->getValue($this->maxFilesPath),
             $this->scopeConfig->getValue($this->levelPath)
         );

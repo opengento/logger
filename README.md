@@ -1,11 +1,12 @@
 # Logger by Opengento
+
 Gelf Handler for Magento 2
 
 ## Setup
 
 Magento 2 Open Source or Commerce edition is required.
 
-###  Composer installation
+### Composer installation
 
 Run the following composer command:
 
@@ -27,7 +28,8 @@ Raise a new [request](https://github.com/opengento/getmylog/issues) to the issue
 
 ## Authors
 
-- **Opengento Community** - *Lead* - [![Twitter Follow](https://img.shields.io/twitter/follow/opengento.svg?style=social)](https://twitter.com/opengento)
+- **Opengento Community** - *Lead*
+    - [![Twitter Follow](https://img.shields.io/twitter/follow/opengento.svg?style=social)](https://twitter.com/opengento)
 
 ## License
 

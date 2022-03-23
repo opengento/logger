@@ -1,24 +1,29 @@
 <?php
+/**
+ * Copyright © OpenGento, All rights reserved.
+ * See LICENSE bundled with this library for license details.
+ */
+
+declare(strict_types=1);
 
 namespace Opengento\Logger\Config\Source;
 
-class LoggingLevel implements \Magento\Framework\Data\OptionSourceInterface
-{
+use Magento\Framework\Data\OptionSourceInterface;
+use Monolog\Logger;
 
-    /**
-     * @return array|array[]
-     */
-    public function toOptionArray()
+class LoggingLevel implements OptionSourceInterface
+{
+    public function toOptionArray(): array
     {
         return [
-            ['value' => \Monolog\Logger::DEBUG, 'label' => __('Debug')],
-            ['value' => \Monolog\Logger::INFO, 'label' => __('Info')],
-            ['value' => \Monolog\Logger::NOTICE, 'label' => __('Notice')],
-            ['value' => \Monolog\Logger::WARNING, 'label' => __('Warning')],
-            ['value' => \Monolog\Logger::ERROR, 'label' => __('Error')],
-            ['value' => \Monolog\Logger::CRITICAL, 'label' => __('Critical')],
-            ['value' => \Monolog\Logger::ALERT, 'label' => __('Alert')],
-            ['value' => \Monolog\Logger::EMERGENCY, 'label' => __('Emergency')],
+            ['value' => Logger::DEBUG, 'label' => __('Debug')],
+            ['value' => Logger::INFO, 'label' => __('Info')],
+            ['value' => Logger::NOTICE, 'label' => __('Notice')],
+            ['value' => Logger::WARNING, 'label' => __('Warning')],
+            ['value' => Logger::ERROR, 'label' => __('Error')],
+            ['value' => Logger::CRITICAL, 'label' => __('Critical')],
+            ['value' => Logger::ALERT, 'label' => __('Alert')],
+            ['value' => Logger::EMERGENCY, 'label' => __('Emergency')],
         ];
     }
 }

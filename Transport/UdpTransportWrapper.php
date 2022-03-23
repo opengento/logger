@@ -4,6 +4,8 @@
  * See LICENSE bundled with this library for license details.
  */
 
+declare(strict_types=1);
+
 namespace Opengento\Logger\Transport;
 
 use Gelf\MessageInterface as Message;
@@ -37,11 +39,6 @@ class UdpTransportWrapper implements TransportInterface
     /**
      * @var string
      */
-    private $isEnabled;
-
-    /**
-     * @var string
-     */
     private $chunkSize;
 
     /**
@@ -57,11 +54,11 @@ class UdpTransportWrapper implements TransportInterface
     /**
      * UdpTransportWrapper constructor.
      *
-     * @param UdpTransportFactory $transportFactory
+     * @param UdpTransportFactory  $transportFactory
      * @param ScopeConfigInterface $scopeConfig
-     * @param string $hostPath
-     * @param string $portPath
-     * @param string $chunkSize
+     * @param string               $hostPath
+     * @param string               $portPath
+     * @param string               $chunkSize
      */
     public function __construct(
         UdpTransportFactory $transportFactory,
@@ -69,8 +66,7 @@ class UdpTransportWrapper implements TransportInterface
         string $hostPath,
         string $portPath,
         string $chunkSize = UdpTransport::CHUNK_SIZE_LAN
-    )
-    {
+    ) {
         $this->scopeConfig = $scopeConfig;
         $this->hostPath = $hostPath;
         $this->portPath = $portPath;
@@ -85,7 +81,7 @@ class UdpTransportWrapper implements TransportInterface
      *
      * @return int the number of bytes sent
      */
-    public function send(Message $message)
+    public function send(Message $message): int
     {
         return $this->getTransporter()->send($message);
     }
@@ -97,8 +93,8 @@ class UdpTransportWrapper implements TransportInterface
     {
         if (null === $this->transporter) {
             $this->transporter = $this->transportFactory->create([
-                'host' => $this->scopeConfig->getValue($this->hostPath),
-                'port' => $this->scopeConfig->getValue($this->portPath),
+                'host'      => $this->scopeConfig->getValue($this->hostPath),
+                'port'      => $this->scopeConfig->getValue($this->portPath),
                 'chunkSize' => $this->chunkSize
             ]);
         }

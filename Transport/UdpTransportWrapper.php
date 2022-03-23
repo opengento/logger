@@ -14,6 +14,8 @@ use Gelf\Transport\UdpTransport;
 use Gelf\Transport\UdpTransportFactory;
 use Magento\Framework\App\Config\ScopeConfigInterface;
 
+use in_array;
+
 /**
  * Class UdpTransportWrapper
  *
@@ -52,26 +54,24 @@ class UdpTransportWrapper implements TransportInterface
     private $transportFactory;
 
     /**
-     * UdpTransportWrapper constructor.
-     *
-     * @param UdpTransportFactory  $transportFactory
-     * @param ScopeConfigInterface $scopeConfig
-     * @param string               $hostPath
-     * @param string               $portPath
-     * @param string               $chunkSize
+     * @var string[] $blacklistedMessages
      */
+    private $blacklistedMessages;
+
     public function __construct(
         UdpTransportFactory $transportFactory,
         ScopeConfigInterface $scopeConfig,
         string $hostPath,
         string $portPath,
-        string $chunkSize = UdpTransport::CHUNK_SIZE_LAN
+        string $chunkSize = UdpTransport::CHUNK_SIZE_LAN,
+        array $blacklistedMessages = []
     ) {
         $this->scopeConfig = $scopeConfig;
         $this->hostPath = $hostPath;
         $this->portPath = $portPath;
         $this->chunkSize = $chunkSize;
         $this->transportFactory = $transportFactory;
+        $this->blacklistedMessages = $blacklistedMessages;
     }
 
     /**
@@ -83,6 +83,10 @@ class UdpTransportWrapper implements TransportInterface
      */
     public function send(Message $message): int
     {
+        if (in_array($message->getShortMessage(), $this->blacklistedMessages, true)) {
+            return 0;
+        }
+
         return $this->getTransporter()->send($message);
     }
 

@@ -1,6 +1,6 @@
 {
     "name": "opengento/logger",
-    "description": "Gelf Handler for Magento 2",
+    "description": "This extension sets a new Gelf logger handler for Magento2.",
     "keywords": [
         "php",
         "magento",
@@ -11,12 +11,16 @@
         "Elasticsearch"
     ],
     "require": {
-        "php": ">=7.1",
+        "php": "^7.1||^8.0",
         "magento/framework": ">=100.1.0",
         "graylog2/gelf-php": "^1.6"
     },
+    "require-dev": {
+        "magento/magento-coding-standard": "^5",
+        "magento/marketplace-eqp": "^4.0",
+        "roave/security-advisories": "dev-master"
+    },
     "type": "magento2-module",
-    "version": "0.3.1",
     "license": [
         "MIT"
     ],
@@ -29,6 +33,10 @@
             "role": "lead"
         }
     ],
+    "support": {
+        "source": "https://github.com/opengento/logger",
+        "issues": "https://github.com/opengento/logger/issues"
+    },
     "autoload": {
         "files": [
             "registration.php"

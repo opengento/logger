@@ -1,6 +1,20 @@
-# Logger by Opengento
+# Gelf Logger Module for Magento 2
 
-Gelf Handler for Magento 2
+[![Latest Stable Version](https://img.shields.io/packagist/v/opengento/logger.svg?style=flat-square)](https://packagist.org/packages/opengento/logger)
+[![License: MIT](https://img.shields.io/github/license/opengento/logger.svg?style=flat-square)](./LICENSE)
+[![Packagist](https://img.shields.io/packagist/dt/opengento/logger.svg?style=flat-square)](https://packagist.org/packages/opengento/logger/stats)
+[![Packagist](https://img.shields.io/packagist/dm/opengento/logger.svg?style=flat-square)](https://packagist.org/packages/opengento/logger/stats)
+
+This extension sets a new Gelf logger handler for Magento2.
+
+- [Setup](#setup)
+-   - [Composer installation](#composer-installation)
+-   - [Setup the module](#setup-the-module)
+- [Features](#features)
+- [Settings](#settings)
+- [Support](#support)
+- [Authors](#authors)
+- [License](#license)
 
 ## Setup
 
@@ -20,16 +34,18 @@ Run the following magento command:
 
 ```
 bin/magento setup:upgrade
-``` 
+```
+
+**If you are in production mode, do not forget to recompile and redeploy the static resources.**
 
 ## Support
 
-Raise a new [request](https://github.com/opengento/getmylog/issues) to the issue tracker.
+Raise a new [request](https://github.com/opengento/logger/issues) to the issue tracker.
 
 ## Authors
 
-- **Opengento Community** - *Lead*
-    - [![Twitter Follow](https://img.shields.io/twitter/follow/opengento.svg?style=social)](https://twitter.com/opengento)
+- **Opengento Community** - *Lead* - [![Twitter Follow](https://img.shields.io/twitter/follow/opengento.svg?style=social)](https://twitter.com/opengento)
+- **Contributors** - *Contributor* - [![GitHub contributors](https://img.shields.io/github/contributors/opengento/logger.svg?style=flat-square)](https://github.com/opengento/logger/graphs/contributors)
 
 ## License
 

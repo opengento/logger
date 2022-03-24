@@ -8,10 +8,8 @@
 This extension sets a new Gelf logger handler for Magento2.
 
 - [Setup](#setup)
--   - [Composer installation](#composer-installation)
--   - [Setup the module](#setup-the-module)
-- [Features](#features)
-- [Settings](#settings)
+    - [Composer installation](#composer-installation)
+    - [Setup the module](#setup-the-module)
 - [Support](#support)
 - [Authors](#authors)
 - [License](#license)

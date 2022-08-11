@@ -72,6 +72,6 @@ class MailHandler implements MagentoHandlerInterface
 
     public function isEnabled(): bool
     {
-        return (bool)$this->scopeConfig->getValue($this->isEnabled);
+        return $this->scopeConfig->isSetFlag($this->isEnabled);
     }
 }

@@ -115,7 +115,7 @@ class UdpTransportWrapper implements TransportInterface
 
     private function createTransporter(): UdpTransport
     {
-        return $this->transporter = $this->transportFactory->create([
+        return $this->transportFactory->create([
             'host' => $this->scopeConfig->getValue($this->hostPath),
             'port' => $this->scopeConfig->getValue($this->portPath),
             'chunkSize' => $this->chunkSize

@@ -8,34 +8,42 @@ declare(strict_types=1);
 
 namespace Opengento\Logger\Processor;
 
+use Magento\Framework\App\Config\ScopeConfigInterface;
+use Magento\Framework\Serialize\Serializer\Json;
+use Magento\Store\Model\ScopeInterface;
 use Monolog\Processor\ProcessorInterface;
-use Opengento\Logger\Config\Config;
-use Opengento\Logger\Config\CustomConfiguration;
 
 class CustomContextProcessor implements ProcessorInterface
 {
     /**
-     * @var CustomConfiguration
+     * @var ScopeConfigInterface
      */
-    private $customConfiguration;
+    private $scopeConfig;
 
-    public function __construct(CustomConfiguration $customConfiguration)
+    /**
+     * @var Json
+     */
+    private $serializer;
+
+    public function __construct(ScopeConfigInterface $scopeConfig, Json $serializer)
     {
-        $this->customConfiguration = $customConfiguration;
+        $this->scopeConfig = $scopeConfig;
+        $this->serializer = $serializer;
     }
 
     public function __invoke(array $records): array
     {
-        $customConfiguration = $this->customConfiguration->getUnserializedConfigValue(Config::CONFIG_LOGGER_CUSTOM_CONFIGURATION);
-
-        if (!$customConfiguration) {
-            return $records;
-        }
-
-        foreach ($customConfiguration as $value) {
+        foreach ($this->resolveTypesLogger() as $value) {
             $records['context'][$value['custom_logger_key']] = $value['custom_logger_value'];
         }
 
         return $records;
+    }
+
+    private function resolveTypesLogger(?string $store = null): array
+    {
+        return $this->serializer->unserialize(
+            $this->scopeConfig->getValue('loggin/context/types_logger', ScopeInterface::SCOPE_STORE, $store) ?: '{}'
+        );
     }
 }

@@ -10,7 +10,7 @@ namespace Opengento\Logger\Handler;
 
 use Exception;
 use Magento\Framework\App\Config\ScopeConfigInterface;
-use Magento\Framework\Filesystem\DirectoryList;
+use Magento\Framework\App\Filesystem\DirectoryList;
 use Monolog\Handler\HandlerInterface;
 
 class RotatingFileHandler implements MagentoHandlerInterface

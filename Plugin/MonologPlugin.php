@@ -4,6 +4,8 @@
  * See COPYING.txt for license details.
  */
 
+declare(strict_types=1);
+
 namespace Opengento\Logger\Plugin;
 
 use Magento\Framework\Logger\Monolog;
@@ -18,8 +20,7 @@ class MonologPlugin
         foreach ($handlers as $handler) {
             if ($handler instanceof MagentoHandlerInterface && $handler->isEnabled()) {
                 $magentoHandlers[] = $handler->getInstance();
-            }
-            if ($handler instanceof HandlerInterface) {
+            } elseif ($handler instanceof HandlerInterface) {
                 $magentoHandlers[] = $handler;
             }
         }

@@ -12,12 +12,11 @@ use Magento\Config\Block\System\Config\Form\Field\FieldArray\AbstractFieldArray;
 
 class Type extends AbstractFieldArray
 {
-    protected function _construct()
+    protected function _prepareToRender(): void
     {
         $this->addColumn('custom_logger_key', ['label' => __('Logger key')]);
         $this->addColumn('custom_logger_value', ['label' => __('Logger value')]);
         $this->_addAfter = false;
         $this->_addButtonLabel = __('Add');
-        parent::_construct();
     }
 }

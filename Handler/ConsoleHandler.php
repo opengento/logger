@@ -45,14 +45,11 @@ class ConsoleHandler implements MagentoHandlerInterface
      */
     public function getInstance(): HandlerInterface
     {
-        return new StreamHandler(
-            'php://stdout',
-            $this->scopeConfig->getValue($this->levelPath)
-        );
+        return new StreamHandler('php://stdout', $this->scopeConfig->getValue($this->levelPath));
     }
 
     public function isEnabled(): bool
     {
-        return (bool)$this->scopeConfig->getValue($this->isEnabled);
+        return $this->scopeConfig->isSetFlag($this->isEnabled);
     }
 }

@@ -14,17 +14,17 @@ use Opengento\Logger\Handler\MagentoHandlerInterface;
 
 class MonologPlugin
 {
-    public function aroundSetHandlers(Monolog $subject, callable $proceed, array $handlers): void
+    public function beforeSetHandlers(Monolog $subject, array $handlers): array
     {
         $magentoHandlers = [];
-        foreach ($handlers as $handler) {
+        foreach ($handlers as $key => $handler) {
             if ($handler instanceof MagentoHandlerInterface && $handler->isEnabled()) {
-                $magentoHandlers[] = $handler->getInstance();
+                $magentoHandlers[$key] = $handler->getInstance();
             } elseif ($handler instanceof HandlerInterface) {
-                $magentoHandlers[] = $handler;
+                $magentoHandlers[$key] = $handler;
             }
         }
 
-        $proceed($magentoHandlers);
+        return [$magentoHandlers];
     }
 }

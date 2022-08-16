@@ -72,7 +72,7 @@ class RotatingFileHandler implements MagentoHandlerInterface
                 $this->directoryList->getPath(DirectoryList::VAR_DIR),
                 $this->scopeConfig->getValue($this->filenamePath)
             ),
-            $this->scopeConfig->getValue($this->maxFilesPath),
+            (int) $this->scopeConfig->getValue($this->maxFilesPath),
             $this->scopeConfig->getValue($this->levelPath)
         );
     }

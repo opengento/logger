@@ -105,12 +105,12 @@ class SlackHandler implements MagentoHandlerInterface
             $this->scopeConfig->getValue($this->tokenPath),
             $this->scopeConfig->getValue($this->channelPath),
             $this->scopeConfig->getValue($this->usernamePath),
-            $this->scopeConfig->getValue($this->useAttachmentPath),
+            $this->scopeConfig->isSetFlag($this->useAttachmentPath),
             $this->scopeConfig->getValue($this->iconEmojiPath),
             $this->scopeConfig->getValue($this->levelPath),
-            $this->scopeConfig->getValue($this->bubblePath),
-            $this->scopeConfig->getValue($this->useShortAttachmentPath),
-            $this->scopeConfig->getValue($this->includeContextAndExtraPath)
+            $this->scopeConfig->isSetFlag($this->bubblePath),
+            $this->scopeConfig->isSetFlag($this->useShortAttachmentPath),
+            $this->scopeConfig->isSetFlag($this->includeContextAndExtraPath)
         );
     }
 

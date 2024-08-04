@@ -13,7 +13,7 @@
     "require": {
         "php": "^7.1||^8.0",
         "magento/framework": ">=100.1.0",
-        "graylog2/gelf-php": "^1.6"
+        "graylog2/gelf-php": "^1.6.0 || ^2.0.0"
     },
     "require-dev": {
         "magento/magento-coding-standard": "^5",

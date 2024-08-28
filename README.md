@@ -5,7 +5,7 @@
 [![Packagist](https://img.shields.io/packagist/dt/opengento/logger.svg?style=flat-square)](https://packagist.org/packages/opengento/logger/stats)
 [![Packagist](https://img.shields.io/packagist/dm/opengento/logger.svg?style=flat-square)](https://packagist.org/packages/opengento/logger/stats)
 
-This extension sets a new Gelf logger handler for Magento2.
+This extension sets new logger handlers for Magento2, such as Gelf or Slack and many others.
 
 - [Setup](#setup)
     - [Composer installation](#composer-installation)

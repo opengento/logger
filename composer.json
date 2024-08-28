@@ -1,6 +1,6 @@
 {
     "name": "opengento/logger",
-    "description": "This extension sets a new Gelf logger handler for Magento2.",
+    "description": "This extension sets new logger handlers for Magento2, such as Gelf or Slack and many others.",
     "keywords": [
         "php",
         "magento",

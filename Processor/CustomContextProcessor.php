@@ -11,6 +11,7 @@ namespace Opengento\Logger\Processor;
 use Magento\Framework\App\Config\ScopeConfigInterface;
 use Magento\Framework\Serialize\Serializer\Json;
 use Magento\Store\Model\ScopeInterface;
+use Monolog\LogRecord;
 use Monolog\Processor\ProcessorInterface;
 
 class CustomContextProcessor implements ProcessorInterface
@@ -31,7 +32,7 @@ class CustomContextProcessor implements ProcessorInterface
         $this->serializer = $serializer;
     }
 
-    public function __invoke(array $records): array
+    public function __invoke(LogRecord $records): LogRecord
     {
         foreach ($this->resolveTypesLogger() as $value) {
             $records['context'][$value['custom_logger_key']] = $value['custom_logger_value'];

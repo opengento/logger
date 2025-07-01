@@ -8,23 +8,37 @@ declare(strict_types=1);
 
 namespace Opengento\Logger\Plugin;
 
-use Magento\Framework\Logger\Monolog;
-use Monolog\Handler\HandlerInterface;
+use Monolog\Logger;
 use Opengento\Logger\Handler\MagentoHandlerInterface;
 
 class MonologPlugin
 {
-    public function beforeSetHandlers(Monolog $subject, array $handlers): array
+    /**
+     * @var MagentoHandlerInterface[]
+     */
+    private $magentoHandlers;
+
+    /**
+     * @param  MagentoHandlerInterface[]  $magentoHandlers
+     */
+    public function __construct(array $magentoHandlers)
     {
-        $magentoHandlers = [];
-        foreach ($handlers as $key => $handler) {
-            if ($handler instanceof MagentoHandlerInterface && $handler->isEnabled()) {
-                $magentoHandlers[$key] = $handler->getInstance();
-            } elseif ($handler instanceof HandlerInterface) {
-                $magentoHandlers[$key] = $handler;
+        $this->magentoHandlers = $magentoHandlers;
+    }
+
+    /**
+     * @param  Logger  $subject
+     * @param  array  $handlers
+     * @return array
+     */
+    public function beforeSetHandlers(Logger $subject, array $handlers): array
+    {
+        foreach ($this->magentoHandlers as $handler) {
+            if ($handler->isEnabled()) {
+                array_unshift($handlers, $handler->getInstance());
             }
         }
 
-        return [$magentoHandlers];
+        return [$handlers];
     }
 }

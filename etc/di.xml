@@ -70,23 +70,36 @@
         </arguments>
     </virtualType>
 
-    <virtualType name="NoopHandler" type="Monolog\Handler\NullHandler"/>
-
-    <type name="Magento\Framework\Logger\Monolog">
+    <virtualType name="SocketHandler" type="Opengento\Logger\Handler\SocketHandler">
         <arguments>
-            <argument name="handlers" xsi:type="array">
-                <item name="gelf" xsi:type="object">GelfHandler</item>
-                <item name="mail" xsi:type="object">MailHandler</item>
-                <item name="console" xsi:type="object">ConsoleHandler</item>
-                <item name="logs" xsi:type="object">RotatingFileHandler</item>
-                <item name="slack" xsi:type="object">SlackHandler</item>
-                <item name="debug" xsi:type="object">NoopHandler</item>
-            </argument>
+            <argument name="isEnabled" xsi:type="string">loggin/socket/is_enabled</argument>
+            <argument name="endpoint" xsi:type="string">loggin/socket/endpoint</argument>
+            <argument name="levelPath" xsi:type="string">loggin/socket/level</argument>
+        </arguments>
+    </virtualType>
+
+    <type name="Monolog\Logger">
+        <arguments>
             <argument name="processors" xsi:type="array">
                 <item name="exceptions" xsi:type="object">Opengento\Logger\Processor\ExceptionProcessor</item>
                 <item name="custom_context" xsi:type="object">Opengento\Logger\Processor\CustomContextProcessor</item>
             </argument>
         </arguments>
-        <plugin name="override_set_handlers_method" type="Opengento\Logger\Plugin\MonologPlugin" sortOrder="1"/>
+        <plugin name="override_set_handlers_method"
+                type="Opengento\Logger\Plugin\MonologPlugin"
+                sortOrder="1" />
+    </type>
+
+    <type name="Opengento\Logger\Plugin\MonologPlugin">
+        <arguments>
+            <argument name="magentoHandlers" xsi:type="array">
+                <item name="gelf" xsi:type="object">GelfHandler</item>
+                <item name="mail" xsi:type="object">MailHandler</item>
+                <item name="console" xsi:type="object">ConsoleHandler</item>
+                <item name="logs" xsi:type="object">RotatingFileHandler</item>
+                <item name="slack" xsi:type="object">SlackHandler</item>
+                <item name="socket" xsi:type="object">SocketHandler</item>
+            </argument>
+        </arguments>
     </type>
 </config>

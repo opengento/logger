@@ -8,11 +8,12 @@ declare(strict_types=1);
 
 namespace Opengento\Logger\Processor;
 
+use Monolog\LogRecord;
 use Monolog\Processor\ProcessorInterface;
 
 class ExceptionProcessor implements ProcessorInterface
 {
-    public function __invoke(array $records): array
+    public function __invoke(LogRecord $records): LogRecord
     {
         if (isset($records['context']['exception'])) {
             $records['extra']['stacktrace'] = $records['context']['exception']->getTraceAsString();

@@ -14,50 +14,14 @@ use Monolog\Handler\NativeMailerHandler;
 
 class MailHandler implements MagentoHandlerInterface
 {
-    /**
-     * @var ScopeConfigInterface
-     */
-    private $scopeConfig;
-
-    /**
-     * @var string
-     */
-    private $isEnabled;
-
-    /**
-     * @var string
-     */
-    private $toPath;
-
-    /**
-     * @var string
-     */
-    private $subjectPath;
-
-    /**
-     * @var string
-     */
-    private $fromPath;
-
-    /**
-     * @var string
-     */
-    private $levelPath;
-
     public function __construct(
-        ScopeConfigInterface $scopeConfig,
-        string $isEnabled,
-        string $toPath,
-        string $subjectPath,
-        string $fromPath,
-        string $levelPath
+        private ScopeConfigInterface $scopeConfig,
+        private string $isEnabled,
+        private string $toPath,
+        private string $subjectPath,
+        private string $fromPath,
+        private string $levelPath
     ) {
-        $this->scopeConfig = $scopeConfig;
-        $this->isEnabled = $isEnabled;
-        $this->toPath = $toPath;
-        $this->subjectPath = $subjectPath;
-        $this->fromPath = $fromPath;
-        $this->levelPath = $levelPath;
     }
 
     public function getInstance(): HandlerInterface

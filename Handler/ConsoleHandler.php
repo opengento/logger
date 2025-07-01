@@ -15,29 +15,11 @@ use Monolog\Handler\StreamHandler;
 
 class ConsoleHandler implements MagentoHandlerInterface
 {
-    /**
-     * @var string
-     */
-    private $isEnabled;
-
-    /**
-     * @var ScopeConfigInterface
-     */
-    private $scopeConfig;
-
-    /**
-     * @var string
-     */
-    private $levelPath;
-
     public function __construct(
-        ScopeConfigInterface $scopeConfig,
-        string $isEnabled,
-        string $levelPath
+        private ScopeConfigInterface $scopeConfig,
+        private string $isEnabled,
+        private string $levelPath
     ) {
-        $this->scopeConfig = $scopeConfig;
-        $this->isEnabled = $isEnabled;
-        $this->levelPath = $levelPath;
     }
 
     /**

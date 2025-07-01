@@ -146,6 +146,21 @@
                     <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
                 </field>
             </group>
+            <group id="socket" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="10" translate="label">
+                <label>Socket</label>
+                <field id="is_enabled" showInDefault="1" showInStore="0" showInWebsite="0" sortOrder="5" translate="label" type="select">
+                    <label>Enabled</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="endpoint" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="10" translate="label" type="text">
+                    <label>Endpoint</label>
+                </field>
+                <field id="level" showInDefault="1" showInStore="0" showInWebsite="0" sortOrder="10" translate="label comment" type="select">
+                    <label>Level</label>
+                    <source_model>Opengento\Logger\Config\Source\LoggingLevel</source_model>
+                    <comment>Messages of this or a higher level will be logged in your log system.</comment>
+                </field>
+            </group>
         </section>
     </system>
 </config>

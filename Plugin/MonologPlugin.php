@@ -14,16 +14,10 @@ use Opengento\Logger\Handler\MagentoHandlerInterface;
 class MonologPlugin
 {
     /**
-     * @var MagentoHandlerInterface[]
-     */
-    private $magentoHandlers;
-
-    /**
      * @param  MagentoHandlerInterface[]  $magentoHandlers
      */
-    public function __construct(array $magentoHandlers)
+    public function __construct(private array $magentoHandlers)
     {
-        $this->magentoHandlers = $magentoHandlers;
     }
 
     /**

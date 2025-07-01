@@ -15,50 +15,14 @@ use Monolog\Handler\HandlerInterface;
 
 class RotatingFileHandler implements MagentoHandlerInterface
 {
-    /**
-     * @var ScopeConfigInterface
-     */
-    private $scopeConfig;
-
-    /**
-     * @var DirectoryList
-     */
-    private $directoryList;
-
-    /**
-     * @var string
-     */
-    private $isEnabled;
-
-    /**
-     * @var string
-     */
-    private $levelPath;
-
-    /**
-     * @var string
-     */
-    private $filenamePath;
-
-    /**
-     * @var string
-     */
-    private $maxFilesPath;
-
     public function __construct(
-        ScopeConfigInterface $scopeConfig,
-        DirectoryList $directoryList,
-        string $isEnabled,
-        string $levelPath,
-        string $filenamePath,
-        string $maxFilesPath
+        private ScopeConfigInterface $scopeConfig,
+        private DirectoryList $directoryList,
+        private string $isEnabled,
+        private string $levelPath,
+        private string $filenamePath,
+        private string $maxFilesPath
     ) {
-        $this->scopeConfig = $scopeConfig;
-        $this->directoryList = $directoryList;
-        $this->isEnabled = $isEnabled;
-        $this->levelPath = $levelPath;
-        $this->filenamePath = $filenamePath;
-        $this->maxFilesPath = $maxFilesPath;
     }
 
     /**

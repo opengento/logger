@@ -15,36 +15,12 @@ use Monolog\Handler\HandlerInterface;
 
 class GelfHandler implements MagentoHandlerInterface
 {
-    /**
-     * @var PublisherInterface
-     */
-    private $publisher;
-
-    /**
-     * @var string
-     */
-    private $isEnabled;
-
-    /**
-     * @var string
-     */
-    private $levelPath;
-
-    /**
-     * @var ScopeConfigInterface
-     */
-    private $scopeConfig;
-
     public function __construct(
-        PublisherInterface $publisher,
-        ScopeConfigInterface $scopeConfig,
-        string $isEnabled,
-        string $levelPath
+        private PublisherInterface $publisher,
+        private ScopeConfigInterface $scopeConfig,
+        private string $isEnabled,
+        private string $levelPath
     ) {
-        $this->publisher = $publisher;
-        $this->isEnabled = $isEnabled;
-        $this->levelPath = $levelPath;
-        $this->scopeConfig = $scopeConfig;
     }
 
     public function getInstance(): HandlerInterface

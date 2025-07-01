@@ -15,85 +15,19 @@ use Monolog\Handler\SlackHandler as MonologSlackHandler;
 
 class SlackHandler implements MagentoHandlerInterface
 {
-    /**
-     * @var ScopeConfigInterface
-     */
-    private $scopeConfig;
-
-    /**
-     * @var string
-     */
-    private $isEnabled;
-
-    /**
-     * @var string
-     */
-    private $levelPath;
-
-    /**
-     * @var string
-     */
-    private $tokenPath;
-
-    /**
-     * @var string
-     */
-    private $channelPath;
-
-    /**
-     * @var string
-     */
-    private $usernamePath;
-
-    /**
-     * @var string
-     */
-    private $useAttachmentPath;
-
-    /**
-     * @var string
-     */
-    private $iconEmojiPath;
-
-    /**
-     * @var string
-     */
-    private $bubblePath;
-
-    /**
-     * @var string
-     */
-    private $useShortAttachmentPath;
-
-    /**
-     * @var string
-     */
-    private $includeContextAndExtraPath;
-
     public function __construct(
-        ScopeConfigInterface $scopeConfig,
-        string $isEnabled,
-        string $levelPath,
-        string $tokenPath,
-        string $channelPath,
-        string $usernamePath,
-        string $useAttachmentPath,
-        string $iconEmojiPath,
-        string $bubblePath,
-        string $useShortAttachmentPath,
-        string $includeContextAndExtraPath
+        private ScopeConfigInterface $scopeConfig,
+        private string $isEnabled,
+        private string $levelPath,
+        private string $tokenPath,
+        private string $channelPath,
+        private string $usernamePath,
+        private string $useAttachmentPath,
+        private string $iconEmojiPath,
+        private string $bubblePath,
+        private string $useShortAttachmentPath,
+        private string $includeContextAndExtraPath
     ) {
-        $this->scopeConfig = $scopeConfig;
-        $this->isEnabled = $isEnabled;
-        $this->levelPath = $levelPath;
-        $this->tokenPath = $tokenPath;
-        $this->channelPath = $channelPath;
-        $this->usernamePath = $usernamePath;
-        $this->useAttachmentPath = $useAttachmentPath;
-        $this->iconEmojiPath = $iconEmojiPath;
-        $this->bubblePath = $bubblePath;
-        $this->useShortAttachmentPath = $useShortAttachmentPath;
-        $this->includeContextAndExtraPath = $includeContextAndExtraPath;
     }
 
     /**

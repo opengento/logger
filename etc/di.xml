@@ -28,6 +28,19 @@
         </arguments>
     </virtualType>
 
+    <virtualType name="ElasticsearchHandler" type="Opengento\Logger\Handler\ElasticsearchHandler">
+        <arguments>
+            <argument name="isEnabled" xsi:type="string">loggin/elasticsearch/is_enabled</argument>
+            <argument name="levelPath" xsi:type="string">loggin/elasticsearch/level</argument>
+            <argument name="hostPath" xsi:type="string">loggin/elasticsearch/host</argument>
+            <argument name="indexPath" xsi:type="string">loggin/elasticsearch/index</argument>
+            <argument name="isAuthenticationEnabledPath" xsi:type="string">loggin/elasticsearch/is_authentication_enabled</argument>
+            <argument name="usernamePath" xsi:type="string">loggin/elasticsearch/username</argument>
+            <argument name="passwordPath" xsi:type="string">loggin/elasticsearch/password</argument>
+            <argument name="ignoreErrorPath" xsi:type="string">loggin/elasticsearch/ignore_error</argument>
+        </arguments>
+    </virtualType>
+
     <virtualType name="MailHandler" type="Opengento\Logger\Handler\MailHandler">
         <arguments>
             <argument name="isEnabled" xsi:type="string">loggin/mail/is_enabled</argument>
@@ -94,6 +107,7 @@
         <arguments>
             <argument name="magentoHandlers" xsi:type="array">
                 <item name="gelf" xsi:type="object">GelfHandler</item>
+                <item name="elasticsearch" xsi:type="object">ElasticsearchHandler</item>
                 <item name="mail" xsi:type="object">MailHandler</item>
                 <item name="console" xsi:type="object">ConsoleHandler</item>
                 <item name="logs" xsi:type="object">RotatingFileHandler</item>

@@ -24,6 +24,16 @@
                 <level>500</level>
                 <subject>Opengento Logger is talking</subject>
             </mail>
+            <elasticsearch>
+                <is_enabled>0</is_enabled>
+                <level>500</level>
+                <host/>
+                <index/>
+                <is_authentication_enabled>0</is_authentication_enabled>
+                <username/>
+                <password/>
+                <ignore_error>1</ignore_error>
+            </elasticsearch>
             <slack>
                 <is_enabled>0</is_enabled>
                 <level>500</level>

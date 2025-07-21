@@ -32,7 +32,11 @@ class CustomContextProcessor implements ProcessorInterface
         $this->serializer = $serializer;
     }
 
-    public function __invoke(LogRecord $records): LogRecord
+    /**
+     * LogRecord is used for Monolog 3.x (Magento >= 2.4.8)
+     * Array is used for Monolog 2.x (Magento <= 2.4.7)
+     */
+    public function __invoke(LogRecord|array $records): LogRecord|array
     {
         foreach ($this->resolveTypesLogger() as $value) {
             $records['context'][$value['custom_logger_key']] = $value['custom_logger_value'];

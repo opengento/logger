@@ -13,7 +13,11 @@ use Monolog\Processor\ProcessorInterface;
 
 class ExceptionProcessor implements ProcessorInterface
 {
-    public function __invoke(LogRecord $records): LogRecord
+    /**
+     * LogRecord is used for Monolog 3.x (Magento >= 2.4.8)
+     * Array is used for Monolog 2.x (Magento <= 2.4.7)
+     */
+    public function __invoke(LogRecord|array $records): LogRecord|array
     {
         if (isset($records['context']['exception'])) {
             $records['extra']['stacktrace'] = $records['context']['exception']->getTraceAsString();

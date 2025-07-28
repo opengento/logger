@@ -51,14 +51,23 @@
                 <field id="host" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="10" translate="label" type="text">
                     <label>Elasticsearch / Opensearch transport host, only one supported</label>
                     <comment>Please specify the port like : https://my-elastic-host:443 otherwise it will fallback to 9200.</comment>
+                    <depends>
+                        <field id="is_enabled">1</field>
+                    </depends>
                 </field>
                 <field id="index" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="15" translate="label" type="text">
                     <label>Elasticsearch / Opensearch index</label>
                     <comment>Index where the logs will be stored</comment>
+                    <depends>
+                        <field id="is_enabled">1</field>
+                    </depends>
                 </field>
                 <field id="is_authentication_enabled" showInDefault="1" showInStore="0" showInWebsite="0" sortOrder="20" translate="label" type="select">
                     <label>Authentication enabled</label>
                     <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <depends>
+                        <field id="is_enabled">1</field>
+                    </depends>
                 </field>
                 <field id="username" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="25" translate="label" type="text">
                     <label>Username</label>
@@ -70,6 +79,7 @@
                 <field id="password" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="30" translate="label" type="obscure">
                     <label>Password</label>
                     <comment>Only used when authentication is enabled</comment>
+                    <backend_model>Magento\Config\Model\Config\Backend\Encrypted</backend_model>
                     <depends>
                         <field id="is_authentication_enabled">1</field>
                     </depends>
@@ -79,11 +89,17 @@
                     <label>Level</label>
                     <source_model>Opengento\Logger\Config\Source\LoggingLevel</source_model>
                     <comment>Messages of this or a higher level will be logged in your log system.</comment>
+                    <depends>
+                        <field id="is_enabled">1</field>
+                    </depends>
                 </field>
                 <field id="ignore_error" showInDefault="1" showInStore="0" showInWebsite="0" sortOrder="40" translate="label" type="select">
                     <label>Ignore errors</label>
                     <comment>By default as true because it can block some functionality if connection is badly configured.</comment>
                     <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <depends>
+                        <field id="is_enabled">1</field>
+                    </depends>
                 </field>
             </group>
             <group id="console" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="10" translate="label">

@@ -8,11 +8,12 @@ declare(strict_types=1);
 
 namespace Opengento\Logger\Handler;
 
-use Elasticsearch\ClientBuilder;
 use Magento\Framework\App\Config\ScopeConfigInterface;
+use Monolog\Handler\BufferHandler;
 use Monolog\Handler\ElasticsearchHandler as MonologElasticsearchHandler;
 use Monolog\Handler\HandlerInterface;
 use Monolog\Handler\NoopHandler;
+use Opengento\Logger\Client\Elasticsearch\ElasticsearchClientFactory;
 use RuntimeException;
 
 class ElasticsearchHandler implements MagentoHandlerInterface
@@ -33,9 +34,7 @@ class ElasticsearchHandler implements MagentoHandlerInterface
 
     public function getInstance(): HandlerInterface
     {
-        $client = ClientBuilder::create()->setHosts(
-            [$this->scopeConfig->getValue($this->hostPath)]
-        );
+        $client = ElasticsearchClientFactory::create()->setHosts([$this->scopeConfig->getValue($this->hostPath)]);
 
         if ($this->scopeConfig->isSetFlag($this->isAuthenticationEnabledPath)) {
             if (
@@ -55,13 +54,19 @@ class ElasticsearchHandler implements MagentoHandlerInterface
             );
         }
 
-        return new MonologElasticsearchHandler(
-            $client->build(),
-            [
-                'index' => $this->scopeConfig->getValue($this->indexPath),
-                'ignore_error' => $this->scopeConfig->isSetFlag($this->ignoreErrorPath)
-            ],
-            $this->scopeConfig->getValue($this->levelPath)
+        $logLevel = $this->scopeConfig->getValue($this->levelPath);
+
+        return new BufferHandler(
+            new MonologElasticsearchHandler(
+                $client->build(),
+                [
+                    'index' => $this->scopeConfig->getValue($this->indexPath),
+                    'ignore_error' => $this->scopeConfig->isSetFlag($this->ignoreErrorPath)
+                ],
+                $logLevel
+            ),
+            0,
+            $logLevel
         );
     }
 

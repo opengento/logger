@@ -16,18 +16,18 @@ use Monolog\Handler\NoopHandler;
 use Opengento\Logger\Client\Elasticsearch\ElasticsearchClientFactory;
 use RuntimeException;
 
-readonly class ElasticsearchHandler implements MagentoHandlerInterface
+class ElasticsearchHandler implements MagentoHandlerInterface
 {
     public function __construct(
-        private ScopeConfigInterface $scopeConfig,
-        private string               $isEnabled,
-        private string               $levelPath,
-        private string               $hostPath,
-        private string               $indexPath,
-        private string               $isAuthenticationEnabledPath,
-        private string               $usernamePath,
-        private string               $passwordPath,
-        private string               $ignoreErrorPath,
+        private readonly ScopeConfigInterface $scopeConfig,
+        private readonly string               $isEnabled,
+        private readonly string               $levelPath,
+        private readonly string               $hostPath,
+        private readonly string               $indexPath,
+        private readonly string               $isAuthenticationEnabledPath,
+        private readonly string               $usernamePath,
+        private readonly string               $passwordPath,
+        private readonly string               $ignoreErrorPath,
     )
     {
     }

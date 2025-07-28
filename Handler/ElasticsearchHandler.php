@@ -8,11 +8,11 @@ declare(strict_types=1);
 
 namespace Opengento\Logger\Handler;
 
-use Elasticsearch\ClientBuilder;
 use Magento\Framework\App\Config\ScopeConfigInterface;
 use Monolog\Handler\ElasticsearchHandler as MonologElasticsearchHandler;
 use Monolog\Handler\HandlerInterface;
 use Monolog\Handler\NoopHandler;
+use Opengento\Logger\Client\Elasticsearch\ElasticsearchClientFactory;
 use RuntimeException;
 
 readonly class ElasticsearchHandler implements MagentoHandlerInterface
@@ -33,9 +33,10 @@ readonly class ElasticsearchHandler implements MagentoHandlerInterface
 
     public function getInstance(): HandlerInterface
     {
-        $client = ClientBuilder::create()->setHosts(
-            [$this->scopeConfig->getValue($this->hostPath)]
-        );
+        $client = ElasticsearchClientFactory::create()
+            ->setHosts(
+                [$this->scopeConfig->getValue($this->hostPath)]
+            );
 
         if ($this->scopeConfig->isSetFlag($this->isAuthenticationEnabledPath)) {
             if (
